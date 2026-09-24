@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+  <!-- Define caracteres, responsividade e titulo da pagina -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GEPLAN Help Desk | Visualizar chamado</title>
+
+  <!-- Carrega a fonte Inter usada na interface -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- CSS global e CSS especifico da tela de detalhes do chamado -->
+  <link rel="stylesheet" href="../css/inicial.css">
+  <link rel="stylesheet" href="../css/visualizarchamados.css">
+</head>
+<body class="app-page visualizar-page" data-page="visualizar">
+  <div class="screen-shell">
+   
+    <!-- Cabecalho padrao com marca, titulo e usuario logado -->
+    <header class="main-header">
+      <a class="geplan-logo" href="/html/paginaChamados.html" aria-label="GEPLAN Help Desk">
+        <img src="../assets/geplan_oficial_branco.png" alt="GEPLAN - Planejamento, Projetos e Gerenciamento de Obras">
+      </a>
+
+      <div class="header-center">
+        <span class="headset-icon" aria-hidden="true"></span>
+        <strong>Help Desk</strong>
+      </div>
+
+      <div class="header-right">
+        <div class="client-logo" aria-label="Ricardo Amaral">
+          <img src="../assets/branco_fundo_transparente.png" alt="Ricardo Amaral">
+        </div>
+        <span class="header-divider" aria-hidden="true"></span>
+        <div class="user-block">
+          <strong class="js-user-name">Carregando...</strong>
+          <button class="logout-btn js-logout" type="button">Sair</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Conteudo principal da tela de detalhes do chamado -->
+    <main class="visualizar-content">
+    
+      <!-- Topo interno com botao de voltar e titulo da pagina -->
+      <div class="view-header">
+        <a class="back-button" href="/html/paginaChamados.html">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m15 18-6-6 6-6"></path>
+          </svg>
+          Voltar para chamados
+        </a>
+        <h1>Visualizar chamado</h1>
+        <span class="header-spacer" aria-hidden="true"></span>
+      </div>
+
+      <!-- Grade principal: detalhes, atualizacoes, resumo e anexos -->
+      <section class="visualizar-grid">
+      
+        <!-- Painel com os dados do problema informado pelo solicitante -->
+        <article class="details-panel tech-card">
+          <h2>Detalhes do problema</h2>
+          <label class="readonly-field">
+            <span>Motivo</span>
+            <strong id="ticketTitle">Carregando...</strong>
+          </label>
+          <div class="problem-description">
+            <h3>Descri&ccedil;&atilde;o</h3>
+            <p id="ticketDescription">Carregando...</p>
+            <div id="ticketError" class="error-highlight">Carregando...</div>
+            <p id="ticketLongDetails" class="long-details"></p>
+          </div>
+        </article>
+
+        <!-- Painel com historico do processo e formulario de nova mensagem -->
+        <article class="updates-panel tech-card">
+          <h2>Atualiza&ccedil;&otilde;es do processo</h2>
+          <div id="ticketTimeline" class="timeline">
+            <p class="muted">Carregando atualiza&ccedil;&otilde;es...</p>
+          </div>
+
+          <form id="updateForm" class="update-box">
+            <label for="updateMessage">Adicionar nova informa&ccedil;&atilde;o</label>
+            <textarea id="updateMessage" name="mensagem" placeholder="Digite sua mensagem ou informa&ccedil;&atilde;o adicional..."></textarea>
+            <div class="update-actions">
+              <button class="primary-action update-submit" type="submit" data-loading-label="ENVIANDO...">ENVIAR</button>
+            </div>
+            <small>Sua mensagem ser&aacute; adicionada ao hist&oacute;rico de atualiza&ccedil;&otilde;es do chamado.</small>
+          </form>
+        </article>
+
+        <!-- Coluna lateral com resumo do chamado, controles admin e anexos -->
+        <aside class="right-stack">
+          <section class="ticket-info tech-card">
+            <div class="info-title-row">
+              <h2>Informa&ccedil;&otilde;es do chamado</h2>
+              <span class="info-chip">Resumo</span>
+            </div>
+            <dl>
+              <div class="meta-item meta-id">
+                <dt>ID do chamado</dt>
+                <dd id="ticketId">-</dd>
+              </div>
+              <div class="meta-item">
+                <dt>Status</dt>
+                <dd><span id="ticketStatus" class="status-badge">-</span></dd>
+              </div>
+              <div class="meta-item">
+                <dt>Data de abertura</dt>
+                <dd id="ticketOpened">-</dd>
+              </div>
+              <div class="meta-item">
+                <dt>&Uacute;ltima atualiza&ccedil;&atilde;o</dt>
+                <dd id="ticketUpdated">-</dd>
+              </div>
+              <div class="meta-item">
+                <dt>Prioridade</dt>
+                <dd id="ticketPriority">-</dd>
+              </div>
+              <div class="meta-item">
+                <dt>T&eacute;cnico respons&aacute;vel</dt>
+                <dd id="ticketTechnician">-</dd>
+              </div>
+            </dl>
+
+            <div id="adminControls" class="admin-controls" data-admin-only hidden>
+              <h3>A&ccedil;&otilde;es administrativas</h3>
+
+              <label class="admin-field" for="adminStatus">
+                <span>Status</span>
+                <select id="adminStatus">
+                  <option value="Aberto">Aberto</option>
+                  <option value="Em andamento">Em andamento</option>
+                  <option value="Aguardando retorno">Aguardando retorno</option>
+                  <option value="Resolvido">Resolvido</option>
+                </select>
+              </label>
+
+              <label class="admin-field" for="adminPriority">
+                <span>Prioridade</span>
+                <select id="adminPriority">
+                  <option value="baixa">Baixa</option>
+                  <option value="media">M&eacute;dia</option>
+                  <option value="alta">Alta</option>
+                  <option value="critica">Cr&iacute;tica</option>
+                </select>
+              </label>
+
+              <label class="admin-field admin-field-full" for="adminTechnician">
+                <span>T&eacute;cnico respons&aacute;vel</span>
+                <input id="adminTechnician" type="text" placeholder="Nome do t&eacute;cnico">
+              </label>
+
+              <div class="admin-actions">
+                <button id="adminSaveBtn" class="primary-action" type="button">Salvar altera&ccedil;&otilde;es</button>
+                <button id="adminCloseBtn" class="secondary-action" type="button">Fechar chamado</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="attachments-panel tech-card">
+            <h2>Anexos</h2>
+            <div id="attachmentsList" class="attachments-list">
+              <p class="muted">Nenhum anexo.</p>
+            </div>
+            <button id="downloadAllBtn" class="secondary-action" type="button">BAIXAR TODOS</button>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <!-- Rodape institucional da pagina -->
+    <footer class="app-footer">
+      <span class="mini-hex" aria-hidden="true"></span>
+      <strong>Help Desk - Suporte T&eacute;cnico</strong>
+      <span>&copy; 2026 - Todos os direitos reservados.</span>
+    </footer>
+  </div>
+
+  <!-- Scripts: auth valida sessao e visualizarchamados.js carrega o chamado -->
+  <script type="module" src="../js/auth.js"></script>
+  <script type="module" src="../js/visualizarchamados.js"></script>
+</body>
+</html>

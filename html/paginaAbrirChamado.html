@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+  <!-- Define caracteres, responsividade e titulo da pagina -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GEPLAN Help Desk | Abrir chamado</title>
+
+  <!-- Carrega a fonte Inter usada na interface -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- CSS global e CSS especifico do formulario de abertura -->
+  <link rel="stylesheet" href="../css/inicial.css">
+  <link rel="stylesheet" href="../css/abrirchamados.css">
+</head>
+
+<body class="app-page abrir-page" data-page="abrir">
+  <div class="screen-shell">
+
+    <!-- Cabecalho padrao com marca, titulo do sistema e usuario -->
+    <header class="main-header">
+      <a class="geplan-logo" href="/html/paginaChamados.html" aria-label="GEPLAN Help Desk">
+        <img src="../assets/geplan_oficial_branco.png" alt="GEPLAN - Planejamento, Projetos e Gerenciamento de Obras">
+      </a>
+
+      <div class="header-center">
+        <span class="headset-icon" aria-hidden="true"></span>
+        <strong>Help Desk</strong>
+      </div>
+
+      <div class="header-right">
+        <div class="client-logo" aria-label="Ricardo Amaral">
+          <img src="../assets/branco_fundo_transparente.png" alt="Ricardo Amaral">
+        </div>
+        <span class="header-divider" aria-hidden="true"></span>
+        <div class="user-block">
+          <strong class="js-user-name">Carregando...</strong>
+          <button class="logout-btn js-logout" type="button">Sair</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Layout com menu lateral e formulario principal -->
+    <div class="layout-with-sidebar">
+
+      <!-- Menu lateral de navegacao -->
+      <aside class="sidebar" aria-label="Menu principal">
+        <nav class="sidebar-nav">
+          <a class="nav-link" href="/html/paginaAbrirChamado.html" data-nav="abrir">
+            <span class="nav-symbol plus-symbol" aria-hidden="true"></span>
+            <span>Abrir chamado</span>
+          </a>
+          <a class="nav-link" href="/html/paginaChamados.html" data-nav="chamados">
+            <span class="nav-symbol list-symbol" aria-hidden="true"></span>
+            <span>Chamados</span>
+          </a>
+          <a class="nav-link" href="/html/paginaSuporte.html" data-nav="suporte">
+            <span class="nav-symbol mail-symbol" aria-hidden="true"></span>
+            <span>Contatar suporte</span>
+          </a>
+        </nav>
+      </aside>
+
+      <!-- Formulario usado para cadastrar um novo chamado no Firebase -->
+      <main class="content-area">
+        <form id="openTicketForm" class="open-card tech-card">
+          <div class="open-heading">
+            <h1>Abrir Chamado</h1>
+          </div>
+
+          <!-- Campos divididos em duas colunas no desktop -->
+          <section class="form-columns">
+            <!-- Coluna esquerda: classificacao e prioridade do chamado -->
+            <div class="form-column">
+              <label class="field-block" for="ticketSubject">
+                <span>Assunto / Motivo <em>*</em></span>
+                <input id="ticketSubject" name="titulo" type="text" placeholder="Informe o assunto do chamado" required>
+              </label>
+
+              <label class="field-block" for="ticketType">
+                <span>Tipo <em>*</em></span>
+                <select id="ticketType" name="tipo" required>
+                  <option value="" disabled selected>Selecione o tipo</option>
+                  <option value="Acesso">Acesso</option>
+                  <option value="Sistema">Sistema</option>
+                  <option value="Software">Software</option>
+                  <option value="Hardware">Hardware</option>
+                  <option value="Rede">Rede</option>
+                  <option value="Solicitacao administrativa">Solicita&ccedil;&atilde;o administrativa</option>
+                </select>
+              </label>
+
+              <label class="field-block" for="ticketNature">
+                <span>Incidente ou Requisi&ccedil;&atilde;o <em>*</em></span>
+                <select id="ticketNature" name="natureza" required>
+                  <option value="" disabled selected>Selecione uma op&ccedil;&atilde;o</option>
+                  <option value="Incidente">Incidente</option>
+                  <option value="Requisicao">Requisi&ccedil;&atilde;o</option>
+                </select>
+              </label>
+
+              <label class="field-block" for="ticketPriority">
+                <span>Prioridade <em>*</em></span>
+                <select id="ticketPriority" name="prioridade" required>
+                  <option value="" disabled selected>Selecione a prioridade</option>
+                  <option value="baixa">Baixa</option>
+                  <option value="media">M&eacute;dia</option>
+                  <option value="alta">Alta</option>
+                  <option value="critica">Cr&iacute;tica</option>
+                </select>
+              </label>
+            </div>
+
+            <!-- Coluna direita: descricao, erro e anexos do chamado -->
+            <div class="form-column">
+              <label class="field-block description-field" for="ticketDescription">
+                <span>Descri&ccedil;&atilde;o <em>*</em></span>
+                <textarea id="ticketDescription" name="descricao" placeholder="Descreva detalhadamente o problema ou solicita&ccedil;&atilde;o..." required></textarea>
+              </label>
+
+              <label class="field-block" for="ticketError">
+                <span>Erro apresentado</span>
+                <input id="ticketError" name="erro" type="text" placeholder="Ex.: Erro 500 - Falha interna do servidor">
+              </label>
+
+              <label class="upload-box" for="ticketFiles">
+                <input id="ticketFiles" name="anexos" type="file" multiple>
+                <span class="upload-icon" aria-hidden="true"></span>
+                <span class="upload-copy">
+                  <strong>Escolher Arquivos</strong>
+                  <small>Clique para enviar arquivos</small>
+                </span>
+              </label>
+
+              <label class="upload-box secondary-upload" for="ticketImages">
+                <input id="ticketImages" name="imagens" type="file" accept="image/*" multiple>
+                <span class="upload-icon" aria-hidden="true"></span>
+                <span class="upload-copy">
+                  <strong>Escolher Arquivos</strong>
+                  <small>Clique para enviar evid&ecirc;ncias</small>
+                </span>
+              </label>
+            </div>
+          </section>
+
+          <button class="primary-action send-ticket" type="submit" data-loading-label="ENVIANDO...">
+            ENVIAR CHAMADO
+          </button>
+        </form>
+      </main>
+    </div>
+
+    <!-- Rodape institucional da pagina -->
+    <footer class="app-footer">
+      <span class="mini-hex" aria-hidden="true"></span>
+      <strong>Help Desk - Suporte T&eacute;cnico</strong>
+      <span>&copy; 2026 - Todos os direitos reservados.</span>
+    </footer>
+  </div>
+
+  <!-- Scripts: auth valida usuario e abrirchamados.js salva o chamado -->
+  <script type="module" src="../js/auth.js"></script>
+  <script type="module" src="../js/abrirchamados.js"></script>
+</body>
+</html>

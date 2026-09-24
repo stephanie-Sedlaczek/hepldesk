@@ -1,0 +1,175 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Confirma se existe usuario autenticado.
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    // Monta o caminho do perfil do usuario logado.
+    function profilePath() {
+      return /databases/$(database)/documents/usuarios/$(request.auth.uid);
+    }
+
+    // Confirma se o usuario tambem esta cadastrado e ativo no Firestore.
+    function activeUser() {
+      return signedIn()
+        && exists(profilePath())
+        && currentProfile().data.ativo != false;
+    }
+
+    // Busca o perfil do usuario logado na colecao usuarios.
+    // A colecao precisa ficar em minusculo: usuarios.
+    function currentProfile() {
+      return get(profilePath());
+    }
+
+    // Define quem e administrador pelo campo perfil = "admin".
+    function isAdmin() {
+      return activeUser()
+        && currentProfile().data.perfil == "admin"
+        && currentProfile().data.ativo != false;
+    }
+
+    // Confere se o usuario logado e dono do documento.
+    function isSelf(userId) {
+      return signedIn() && request.auth.uid == userId;
+    }
+
+    // Monta o caminho de um chamado para consultar dados do documento pai.
+    function ticketPath(ticketId) {
+      return /databases/$(database)/documents/chamados/$(ticketId);
+    }
+
+    // Confere se o usuario e dono do chamado pelo UID ou pelo e-mail.
+    function ownsTicketData(ticket) {
+      return activeUser()
+        && (
+          ticket.usuarioUid == request.auth.uid
+          || (
+            request.auth.token.email != null
+            && ticket.usuarioEmail == request.auth.token.email
+          )
+        );
+    }
+
+    // Permite acesso ao chamado existente quando for admin ou solicitante.
+    function canAccessTicket(ticketId) {
+      return isAdmin() || ownsTicketData(get(ticketPath(ticketId)).data);
+    }
+
+    // Permite acesso ao chamado apos uma escrita em lote.
+    function canAccessTicketAfter(ticketId) {
+      return isAdmin() || ownsTicketData(getAfter(ticketPath(ticketId)).data);
+    }
+
+    // Campos principais permitidos ao criar um chamado.
+    function validTicketCreate(ticketId) {
+      return request.resource.data.keys().hasOnly([
+        "id",
+        "titulo",
+        "descricao",
+        "erro",
+        "tipo",
+        "natureza",
+        "status",
+        "prioridade",
+        "tecnicoResponsavel",
+        "usuarioUid",
+        "usuarioNome",
+        "usuarioEmail",
+        "dataAbertura",
+        "ultimaAtualizacao",
+        "anexos",
+        "atualizacoes"
+      ])
+      && request.resource.data.keys().hasAll([
+        "id",
+        "titulo",
+        "descricao",
+        "tipo",
+        "natureza",
+        "status",
+        "prioridade",
+        "usuarioUid",
+        "usuarioEmail",
+        "dataAbertura",
+        "ultimaAtualizacao"
+      ])
+      && request.resource.data.id == ticketId
+      && request.resource.data.usuarioUid == request.auth.uid
+      && (
+        request.auth.token.email == null
+        || request.resource.data.usuarioEmail == request.auth.token.email
+      )
+      && request.resource.data.status == "Aberto";
+    }
+
+    // Usuario comum so pode atualizar a data de ultima atualizacao do proprio chamado.
+    function validSolicitanteTicketUpdate() {
+      return ownsTicketData(resource.data)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          "ultimaAtualizacao"
+        ]);
+    }
+
+    // Admin pode controlar status, prioridade, tecnico e data de atualizacao.
+    function validAdminTicketUpdate() {
+      return isAdmin()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          "status",
+          "prioridade",
+          "tecnicoResponsavel",
+          "ultimaAtualizacao"
+        ]);
+    }
+
+    // Campos permitidos em cada mensagem do historico do chamado.
+    function validUpdateCreate() {
+      return request.resource.data.keys().hasOnly([
+        "mensagem",
+        "autor",
+        "tipoAutor",
+        "tipo",
+        "anexos",
+        "data"
+      ])
+      && request.resource.data.keys().hasAll([
+        "mensagem",
+        "autor",
+        "tipoAutor",
+        "tipo",
+        "data"
+      ])
+      && request.resource.data.mensagem is string
+      && request.resource.data.autor is string
+      && request.resource.data.tipo is string
+      && request.resource.data.tipoAutor in ["solicitante", "tecnico"]
+      && (isAdmin() || request.resource.data.tipoAutor == "solicitante");
+    }
+
+    // Perfis dos usuarios: admin gerencia todos, usuario comum le apenas o proprio.
+    // O documento deve ter como ID o mesmo UID criado no Firebase Authentication.
+    match /usuarios/{userId} {
+      allow get: if isSelf(userId) || isAdmin();
+      allow list: if isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Chamados principais.
+    match /chamados/{ticketId} {
+      allow read: if isAdmin() || ownsTicketData(resource.data);
+      allow create: if activeUser() && validTicketCreate(ticketId);
+      allow update: if validAdminTicketUpdate() || validSolicitanteTicketUpdate();
+      allow delete: if isAdmin();
+
+      // Historico de mensagens de cada chamado.
+      match /updates/{updateId} {
+        allow read: if canAccessTicket(ticketId);
+        allow create: if activeUser() && canAccessTicketAfter(ticketId) && validUpdateCreate();
+        allow update, delete: if isAdmin();
+      }
+    }
+  }
+}

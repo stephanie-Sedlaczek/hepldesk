@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+  <!-- Define caracteres, responsividade e titulo da pagina -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GEPLAN Help Desk | Contatar suporte</title>
+  
+  <!-- Carrega a fonte Inter usada na interface -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- CSS global e CSS especifico da pagina de suporte -->
+  <link rel="stylesheet" href="../css/inicial.css">
+  <link rel="stylesheet" href="../css/suporte.css">
+</head>
+<body class="app-page suporte-page" data-page="suporte">
+  <div class="screen-shell">
+   
+    <!-- Cabecalho padrao com marca, titulo e usuario logado -->
+    <header class="main-header">
+      <a class="geplan-logo" href="/html/paginaChamados.html" aria-label="GEPLAN Help Desk">
+        <img src="../assets/geplan_oficial_branco.png" alt="GEPLAN - Planejamento, Projetos e Gerenciamento de Obras">
+      </a>
+
+      <div class="header-center">
+        <span class="headset-icon" aria-hidden="true"></span>
+        <strong>Help Desk</strong>
+      </div>
+
+      <div class="header-right">
+        <div class="client-logo" aria-label="Ricardo Amaral">
+          <img src="../assets/branco_fundo_transparente.png" alt="Ricardo Amaral">
+        </div>
+        <span class="header-divider" aria-hidden="true"></span>
+        <div class="user-block">
+          <strong class="js-user-name">Carregando...</strong>
+          <button class="logout-btn js-logout" type="button">Sair</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Layout com menu lateral e conteudo de suporte -->
+    <div class="layout-with-sidebar">
+   
+      <!-- Menu lateral de navegacao entre telas -->
+      <aside class="sidebar" aria-label="Menu principal">
+        <nav class="sidebar-nav">
+          <a class="nav-link" href="/html/paginaAbrirChamado.html" data-nav="abrir">
+            <span class="nav-symbol plus-symbol" aria-hidden="true"></span>
+            <span>Abrir chamado</span>
+          </a>
+          <a class="nav-link" href="/html/paginaChamados.html" data-nav="chamados">
+            <span class="nav-symbol list-symbol" aria-hidden="true"></span>
+            <span>Chamados</span>
+          </a>
+          <a class="nav-link" href="/html/paginaSuporte.html" data-nav="suporte">
+            <span class="nav-symbol mail-symbol" aria-hidden="true"></span>
+            <span>Contatar suporte</span>
+          </a>
+        </nav>
+      </aside>
+
+      <!-- Area principal com orientacoes e e-mails de suporte -->
+      <main class="content-area support-content">
+        <section class="support-panel tech-card">
+          <div class="support-intro">
+            <h1>Contatar suporte</h1>
+            <p>Voce pode abrir um chamado entrando em contato com nossa equipe de suporte atraves dos canais abaixo.</p>
+          </div>
+
+          <!-- Blocos com instrucoes para o usuario e modelo de e-mail -->
+          <div class="support-grid">
+            <article class="support-card">
+              <h2>Informacoes importantes</h2>
+              <ul>
+                <li>Assunto claro e objetivo</li>
+                <li>Descricao detalhada do problema</li>
+                <li>Setor / Departamento</li>
+                <li>Nome completo</li>
+                <li>Telefone para contato opcional</li>
+                <li>Anexos ou prints se necessario</li>
+              </ul>
+            </article>
+
+            <article class="support-card email-model">
+              <h2>Modelo de e-mail</h2>
+              <p><strong>Para:</strong><br>matheus.fernandes@geplangerenciamento.com.br<br>stephanie@geplangerenciamento.com.br</p>
+              <p><strong>Assunto:</strong> Problema no sistema interno</p>
+              <p><strong>Descricao:</strong><br>Ola! Estou com dificuldades para acessar o sistema interno. Ao tentar realizar o login, aparece a mensagem de erro abaixo.</p>
+              <p>Segue print em anexo.</p>
+              <p>Atenciosamente,<br>Nome | Setor</p>
+            </article>
+          </div>
+
+          <!-- E-mails oficiais da equipe de suporte, sem acao de clique -->
+          <div class="support-emails" aria-label="E-mails de suporte">
+            <strong>E-mails de suporte</strong>
+            <span>matheus.fernandes@geplangerenciamento.com.br</span>
+            <span>stephanie@geplangerenciamento.com.br</span>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Rodape institucional da pagina -->
+    <footer class="app-footer">
+      <span class="mini-hex" aria-hidden="true"></span>
+      <strong>Help Desk - Suporte T&eacute;cnico</strong>
+      <span>&copy; 2026 - Todos os direitos reservados.</span>
+    </footer>
+  </div>
+
+  <!-- Script que controla usuario logado, menu ativo e logout -->
+  <script type="module" src="../js/auth.js"></script>
+</body>
+</html>

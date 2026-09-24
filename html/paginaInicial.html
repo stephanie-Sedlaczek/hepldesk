@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+ 
+  <!-- Define caracteres, responsividade e titulo da aba do navegador -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GEPLAN Help Desk | Login</title>
+
+  <!-- Carrega a fonte Inter usada no visual do sistema -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- CSS principal da tela de login e dos componentes compartilhados -->
+  <link rel="stylesheet" href="../css/inicial.css">
+</head>
+<body class="login-page" data-page="login">
+  <div class="screen-shell circuit-bg">
+   
+    <!-- Cabecalho com marca, titulo do sistema e area do usuario -->
+    <header class="main-header login-header">
+      <a class="geplan-logo" href="./paginaInicial.html" aria-label="GEPLAN Help Desk">
+        <img src="../assets/geplan_oficial_branco.png" alt="GEPLAN - Planejamento, Projetos e Gerenciamento de Obras">
+      </a>
+
+      <div class="header-center">
+        <span class="headset-icon" aria-hidden="true"></span>
+        <strong>Help Desk</strong>
+      </div>
+
+      <div class="header-right">
+        <div class="client-logo" aria-label="Ricardo Amaral">
+          <img src="../assets/branco_fundo_transparente.png" alt="Ricardo Amaral">
+        </div>
+        <div class="user-block login-user">
+          <strong class="js-user-name">Visitante</strong>
+          <button class="logout-btn js-logout" type="button">Sair</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Conteudo central com o formulario de acesso -->
+    <main class="login-main">
+      <section class="login-card tech-card" aria-labelledby="loginTitle">
+        <div class="card-glow" aria-hidden="true"></div>
+        <h1 id="loginTitle">Acesse sua conta</h1>
+
+        <!-- Formulario usado pelo auth.js para autenticar no Firebase -->
+        <form id="loginForm" class="login-form">
+          <label class="input-shell input-shell--email" for="email">
+            <svg class="input-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 6h16v12H4z"></path>
+              <path d="m4 7 8 6 8-6"></path>
+            </svg>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="E-mail" required>
+          </label>
+
+          <label class="input-shell" for="password">
+            <svg class="input-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 10V8a5 5 0 0 1 10 0v2"></path>
+              <path d="M6 10h12v10H6z"></path>
+            </svg>
+            <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Senha" required>
+            <button class="icon-btn password-toggle" type="button" aria-label="Mostrar senha">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </label>
+
+          <label class="captcha-box" for="robotCheck">
+            <span class="fake-check">
+              <input id="robotCheck" type="checkbox" required>
+              <span aria-hidden="true"></span>
+            </span>
+            <strong>N&atilde;o sou rob&ocirc;</strong>
+            <span class="recaptcha-mark">
+              <span class="recaptcha-spinner" aria-hidden="true"></span>
+              reCAPTCHA
+              <small>Privacidade - Termos</small>
+            </span>
+          </label>
+
+          <button class="primary-action" type="submit" data-loading-label="ENTRANDO...">ENTRAR</button>
+        </form>
+      </section>
+    </main>
+
+    <!-- Rodape institucional padrao do sistema -->
+    <footer class="app-footer">
+      <span class="mini-hex" aria-hidden="true"></span>
+      <strong>Help Desk - Suporte T&eacute;cnico</strong>
+      <span>&copy; 2026 - Todos os direitos reservados.</span>
+    </footer>
+  </div>
+  <!-- Script que controla login, sessao e redirecionamento -->
+  <script type="module" src="../js/auth.js"></script>
+</body>
+</html>

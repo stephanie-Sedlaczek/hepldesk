@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Define caracteres, responsividade e titulo da pagina -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GEPLAN Help Desk | Chamados</title>
+
+  <!-- Carrega a fonte Inter usada em todo o sistema -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Estilos globais e estilos especificos da lista de chamados -->
+  <link rel="stylesheet" href="../css/inicial.css">
+  <link rel="stylesheet" href="../css/chamados.css">
+</head>
+<body class="app-page chamados-page" data-page="chamados">
+  <div class="screen-shell">
+    
+    <!-- Cabecalho padrao com logo, titulo e usuario logado -->
+    <header class="main-header">
+      <a class="geplan-logo" href="/html/paginaChamados.html" aria-label="GEPLAN Help Desk">
+        <img src="../assets/geplan_oficial_branco.png" alt="GEPLAN - Planejamento, Projetos e Gerenciamento de Obras">
+      </a>
+
+      <div class="header-center">
+        <span class="headset-icon" aria-hidden="true"></span>
+        <strong>Help Desk</strong>
+      </div>
+
+      <div class="header-right">
+        <div class="client-logo" aria-label="Ricardo Amaral">
+          <img src="../assets/branco_fundo_transparente.png" alt="Ricardo Amaral">
+        </div>
+        <span class="header-divider" aria-hidden="true"></span>
+        <div class="user-block">
+          <strong class="js-user-name">Carregando...</strong>
+          <button class="logout-btn js-logout" type="button">Sair</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Layout com menu lateral e area principal -->
+    <div class="layout-with-sidebar">
+     
+      <!-- Menu principal de navegacao entre as telas -->
+      <aside class="sidebar" aria-label="Menu principal">
+        <nav class="sidebar-nav">
+          <a class="nav-link" href="/html/paginaAbrirChamado.html" data-nav="abrir">
+            <span class="nav-symbol plus-symbol" aria-hidden="true"></span>
+            <span>Abrir chamado</span>
+          </a>
+          <a class="nav-link" href="/html/paginaChamados.html" data-nav="chamados">
+            <span class="nav-symbol list-symbol" aria-hidden="true"></span>
+            <span>Chamados</span>
+          </a>
+          <a class="nav-link" href="/html/paginaSuporte.html" data-nav="suporte">
+            <span class="nav-symbol mail-symbol" aria-hidden="true"></span>
+            <span>Contatar suporte</span>
+          </a>
+        </nav>
+      </aside>
+
+      <!-- Area principal com busca, tabela e paginacao dos chamados -->
+      <main class="content-area">
+        <section class="table-card tech-card">
+          <div class="content-title-row">
+            <h1>Chamados</h1>
+
+            <label class="search-field" for="ticketSearch">
+              <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"></circle>
+                <path d="m16.5 16.5 4 4"></path>
+              </svg>
+              <input id="ticketSearch" type="search" placeholder="Buscar chamado">
+            </label>
+          </div>
+
+          <div class="table-frame">
+            <table class="tickets-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Status</th>
+                  <th>Motivo</th>
+                  <th>Data</th>
+                  <th>T&eacute;cnico respons&aacute;vel</th>
+                </tr>
+              </thead>
+
+              <tbody id="ticketsTableBody">
+                <tr class="loading-row">
+                  <td colspan="5">Carregando chamados...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-footer">
+            <span id="tableSummary">Mostrando 0 chamados</span>
+            <div id="pagination" class="pagination" aria-label="Pagina&ccedil;&atilde;o"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Rodape institucional padrao do sistema -->
+    <footer class="app-footer">
+      <span class="mini-hex" aria-hidden="true"></span>
+      <strong>Help Desk - Suporte T&eacute;cnico</strong>
+      <span>&copy; 2026 - Todos os direitos reservados.</span>
+    </footer>
+  </div>
+
+  <!-- Scripts: auth protege a pagina e chamados.js monta a tabela -->
+  <script type="module" src="../js/auth.js"></script>
+  <script type="module" src="../js/chamados.js"></script>
+</body>
+</html>

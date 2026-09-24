@@ -1,0 +1,278 @@
+/* Define a altura util da pagina de abertura considerando cabecalho e rodape */
+.abrir-page .layout-with-sidebar {
+  height: auto;
+  min-height: calc(100dvh - var(--header-h) - var(--footer-h));
+}
+
+/* Area onde o formulario fica posicionado */
+.abrir-page .content-area {
+  min-height: 0;
+  display: grid;
+  align-items: start;
+  padding: clamp(16px, 2.2vw, 28px) clamp(16px, 2.6vw, 30px) 12px;
+  overflow: visible;
+}
+
+/* Card principal que envolve o formulario */
+.open-card {
+  width: 100%;
+  height: auto;
+  min-height: min-content;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(18px, 2.2vw, 28px);
+  border-color: rgba(59, 130, 246, 0.3);
+  overflow: hidden;
+}
+
+/* Titulo da tela de abertura de chamado */
+.open-heading {
+  position: relative;
+  z-index: 1;
+  margin-bottom: clamp(16px, 2vw, 22px);
+}
+
+.open-card h1 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(27px, 3vw, 38px);
+  font-weight: 900;
+}
+
+/* Grade com as duas colunas do formulario no desktop */
+.form-columns {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 auto;
+  min-height: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: clamp(14px, 2vw, 22px);
+  overflow: visible;
+}
+
+/* Cada coluna agrupa campos relacionados do formulario */
+.form-column {
+  min-width: 0;
+  min-height: auto;
+  display: grid;
+  align-content: start;
+  gap: clamp(14px, 1.7vw, 18px);
+  padding: clamp(14px, 1.8vw, 18px);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 8px;
+  background: rgba(2, 10, 20, 0.56);
+  box-shadow: inset 0 0 38px rgba(37, 99, 235, 0.04);
+}
+
+/* Label e texto dos campos */
+.abrir-page .field-block {
+  display: grid;
+  gap: 9px;
+  color: #f8fafc;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.abrir-page .field-block em {
+  color: #ff4d6d;
+  font-style: normal;
+}
+
+/* Inputs, selects e textarea do formulario */
+.abrir-page .field-block input,
+.abrir-page .field-block select,
+.abrir-page .field-block textarea {
+  width: 100%;
+  border: 1px solid rgba(59, 130, 246, 0.28);
+  border-radius: 6px;
+  color: #f8fafc;
+  background: rgba(2, 10, 20, 0.72);
+  box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.22);
+  outline: 0;
+}
+
+.abrir-page .field-block input,
+.abrir-page .field-block select {
+  min-height: 48px;
+  padding: 0 14px;
+}
+
+.abrir-page .field-block textarea {
+  min-height: clamp(116px, 14vh, 148px);
+  resize: none;
+  padding: 14px;
+  line-height: 1.55;
+}
+
+.abrir-page .field-block input::placeholder,
+.abrir-page .field-block textarea::placeholder {
+  color: #94a3b8;
+}
+
+.abrir-page .field-block select option {
+  color: #f8fafc;
+  background: #0b1120;
+}
+
+.abrir-page .field-block input:focus,
+.abrir-page .field-block select:focus,
+.abrir-page .field-block textarea:focus {
+  border-color: rgba(59, 130, 246, 0.82);
+  background: rgba(2, 10, 20, 0.86);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.16);
+}
+
+/* Area visual para escolher arquivos anexos */
+.upload-box {
+  position: relative;
+  min-height: 74px;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  padding: 13px 16px;
+  border: 1px dashed rgba(59, 130, 246, 0.38);
+  border-radius: 6px;
+  color: #fff;
+  background: rgba(2, 10, 20, 0.58);
+  cursor: pointer;
+}
+
+.upload-box:hover {
+  border-color: rgba(59, 130, 246, 0.82);
+  background: rgba(37, 99, 235, 0.08);
+}
+
+.upload-box input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.upload-copy {
+  display: grid;
+  gap: 5px;
+}
+
+.upload-copy strong {
+  color: #f8fafc;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.upload-copy small {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+/* Icone de upload desenhado em CSS */
+.upload-icon {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  border: 2px solid #f8fafc;
+  border-top: 0;
+  border-radius: 0 0 5px 5px;
+}
+
+.upload-icon::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -8px;
+  width: 14px;
+  height: 14px;
+  border-left: 3px solid #f8fafc;
+  border-top: 3px solid #f8fafc;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.upload-icon::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -9px;
+  width: 3px;
+  height: 26px;
+  background: #f8fafc;
+  transform: translateX(-50%);
+}
+
+/* Botao final que envia o chamado */
+.send-ticket {
+  width: 100%;
+  min-height: 52px;
+  margin-top: clamp(14px, 1.8vw, 18px);
+  font-size: 15px;
+}
+
+/* Em telas medias o formulario vira uma coluna */
+@media (max-width: 980px) {
+  .abrir-page .layout-with-sidebar {
+    height: auto;
+    min-height: calc(100dvh - var(--header-h) - var(--footer-h));
+  }
+
+  .form-columns {
+    grid-template-columns: 1fr;
+    overflow: visible;
+    padding-right: 4px;
+  }
+
+  .open-card {
+    height: auto;
+    padding: 16px;
+  }
+}
+
+/* Ajustes para celular */
+@media (max-width: 760px) {
+  .abrir-page .content-area {
+    padding: 12px 12px calc(var(--footer-h) + 16px);
+  }
+
+  .abrir-page .layout-with-sidebar {
+    min-height: 0;
+  }
+
+  .form-column {
+    padding: 12px;
+  }
+
+  .open-card h1 {
+    font-size: clamp(26px, 8vw, 34px);
+  }
+
+}
+
+/* Ajustes para celulares estreitos */
+@media (max-width: 420px) {
+  .form-columns {
+    gap: 12px;
+  }
+
+  .form-column {
+    gap: 12px;
+  }
+
+  .abrir-page .field-block input,
+  .abrir-page .field-block select {
+    min-height: 44px;
+  }
+
+  .abrir-page .field-block textarea {
+    min-height: 132px;
+  }
+
+  .upload-box {
+    grid-template-columns: 34px minmax(0, 1fr);
+    min-height: 66px;
+    padding: 12px;
+  }
+
+  .upload-icon {
+    width: 28px;
+    height: 28px;
+  }
+}
